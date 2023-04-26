@@ -1,13 +1,12 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
-const initialSeconds = 180;
 const initialStartPauseLabel = "Start";
 let intervalId;
 
-const Timer = () => {
+const Timer = ({ initialSeconds }) => {
   const [running, setRunning] = useState(false);
-  const [seconds, setSeconds] = useState(initialSeconds);
+  const [seconds, setSeconds] = useState(initialSeconds ?? 180);
   const [startPauseLabel, setStartPauseLabel] = useState(
     initialStartPauseLabel
   );
@@ -38,7 +37,7 @@ const Timer = () => {
     clearInterval(intervalId);
     intervalId = undefined;
     setRunning(false);
-    setSeconds(initialSeconds);
+    setSeconds(initialSeconds ?? 180);
   };
 
   return (
