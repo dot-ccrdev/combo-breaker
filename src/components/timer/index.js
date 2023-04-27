@@ -1,22 +1,21 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
-const initialStartPauseLabel = "Start";
+const pauseLabel = "Pause";
+const startLabel = "Start";
 let intervalId;
 
 const Timer = ({ initialSeconds }) => {
   const [running, setRunning] = useState(false);
   const [seconds, setSeconds] = useState(initialSeconds ?? 180);
-  const [startPauseLabel, setStartPauseLabel] = useState(
-    initialStartPauseLabel
-  );
+  const [toggleButtonLabel, setToggleButtonLabel] = useState(startLabel);
 
   useEffect(() => {
     if (running) {
-      setStartPauseLabel("Pause");
+      setToggleButtonLabel(pauseLabel);
       return;
     }
-    setStartPauseLabel(initialStartPauseLabel);
+    setToggleButtonLabel(startLabel);
   }, [running]);
 
   const toggleRunningTimer = (event) => {
@@ -34,9 +33,9 @@ const Timer = ({ initialSeconds }) => {
 
   const resetTimer = (event) => {
     event.preventDefault();
+    if (running) setRunning(false);
     clearInterval(intervalId);
     intervalId = undefined;
-    setRunning(false);
     setSeconds(initialSeconds ?? 180);
   };
 
@@ -52,10 +51,15 @@ const Timer = ({ initialSeconds }) => {
     >
       <div>{seconds}</div>
       <div style={{ display: "flex", gap: "1rem" }}>
-        <button style={{ maxWidth: "4rem" }} onClick={toggleRunningTimer}>
-          {startPauseLabel}
+        <button
+          data-testid="toggle-button"
+          style={{ maxWidth: "4rem" }}
+          onClick={toggleRunningTimer}
+        >
+          {toggleButtonLabel}
         </button>
         <button
+          data-testid="reset-button"
           style={{ maxWidth: "4rem" }}
           onClick={resetTimer}
           disabled={running === false && seconds === initialSeconds}
