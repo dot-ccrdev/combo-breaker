@@ -1,5 +1,5 @@
 import { h } from "preact";
-import Timer from "../timer";
+import WorkTimer from "../work-timer";
 
 const Round = () => {
   return (
@@ -14,7 +14,7 @@ const Round = () => {
       }}
     >
       <b>Round 1</b>
-      <Timer />
+      <WorkTimer />
     </div>
   );
 };

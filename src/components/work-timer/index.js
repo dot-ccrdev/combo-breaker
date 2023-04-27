@@ -4,7 +4,7 @@ import { useEffect, useState } from "preact/hooks";
 const DEFAULT_DURATION = 180;
 const PAUSE_LABEL = "Pause";
 const START_LABEL = "Start";
-const TIMER_PHASES = {
+const PHASES = {
   DEFEND: "Defend",
   PREPARE: "Prepare",
   THROW: "Throw",
@@ -12,8 +12,8 @@ const TIMER_PHASES = {
 };
 let intervalId;
 
-const Timer = ({ initialSeconds }) => {
-  const [phase, setPhase] = useState(TIMER_PHASES.PREPARE);
+const WorkTimer = ({ initialSeconds }) => {
+  const [phase, setPhase] = useState(PHASES.PREPARE);
   const [running, setRunning] = useState(false);
   const [seconds, setSeconds] = useState(initialSeconds ?? DEFAULT_DURATION);
   const [toggleButtonLabel, setToggleButtonLabel] = useState(START_LABEL);
@@ -41,13 +41,13 @@ const Timer = ({ initialSeconds }) => {
     clearInterval(intervalId);
     intervalId = undefined;
     setSeconds(initialSeconds ?? 180);
-    setPhase(TIMER_PHASES.PREPARE);
+    setPhase(PHASES.PREPARE);
   };
 
   const toggleTimer = () => {
     if (!running) {
       setRunning(true);
-      setPhase(TIMER_PHASES.WORK);
+      setPhase(PHASES.WORK);
       intervalId = setInterval(() => {
         setSeconds((seconds) => seconds - 1);
       }, 1000);
@@ -90,4 +90,4 @@ const Timer = ({ initialSeconds }) => {
   );
 };
 
-export default Timer;
+export default WorkTimer;
