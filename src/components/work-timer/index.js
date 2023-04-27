@@ -6,17 +6,23 @@ const PAUSE_LABEL = "Pause";
 const START_LABEL = "Start";
 const PHASES = {
   DEFEND: "Defend",
+  DONE: "Done",
   PREPARE: "Prepare",
   THROW: "Throw",
   WORK: "Work",
 };
 let intervalId;
 
-const WorkTimer = ({ initialSeconds }) => {
+const WorkTimer = () => {
   const [phase, setPhase] = useState(PHASES.PREPARE);
   const [running, setRunning] = useState(false);
-  const [seconds, setSeconds] = useState(initialSeconds ?? DEFAULT_DURATION);
+  const [seconds, setSeconds] = useState(DEFAULT_DURATION);
   const [toggleButtonLabel, setToggleButtonLabel] = useState(START_LABEL);
+
+  useEffect(() => {
+    if (seconds === DEFAULT_DURATION) return;
+    if (seconds === 0) setPhase(PHASES.DONE);
+  }, [seconds]);
 
   useEffect(() => {
     if (running) {
@@ -40,7 +46,7 @@ const WorkTimer = ({ initialSeconds }) => {
     if (running) setRunning(false);
     clearInterval(intervalId);
     intervalId = undefined;
-    setSeconds(initialSeconds ?? 180);
+    setSeconds(DEFAULT_DURATION);
     setPhase(PHASES.PREPARE);
   };
 
@@ -81,7 +87,7 @@ const WorkTimer = ({ initialSeconds }) => {
           data-testid="reset-button"
           style={{ maxWidth: "4rem" }}
           onClick={handleResetButtonClick}
-          disabled={running === false && seconds === initialSeconds}
+          disabled={running === false && seconds === DEFAULT_DURATION}
         >
           Reset
         </button>
