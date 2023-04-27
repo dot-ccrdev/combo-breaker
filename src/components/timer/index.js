@@ -1,27 +1,53 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
-const pauseLabel = "Pause";
-const startLabel = "Start";
+const DEFAULT_DURATION = 180;
+const PAUSE_LABEL = "Pause";
+const START_LABEL = "Start";
+const TIMER_PHASES = {
+  DEFEND: "Defend",
+  PREPARE: "Prepare",
+  THROW: "Throw",
+  WORK: "Work",
+};
 let intervalId;
 
 const Timer = ({ initialSeconds }) => {
+  const [phase, setPhase] = useState(TIMER_PHASES.PREPARE);
   const [running, setRunning] = useState(false);
-  const [seconds, setSeconds] = useState(initialSeconds ?? 180);
-  const [toggleButtonLabel, setToggleButtonLabel] = useState(startLabel);
+  const [seconds, setSeconds] = useState(initialSeconds ?? DEFAULT_DURATION);
+  const [toggleButtonLabel, setToggleButtonLabel] = useState(START_LABEL);
 
   useEffect(() => {
     if (running) {
-      setToggleButtonLabel(pauseLabel);
+      setToggleButtonLabel(PAUSE_LABEL);
       return;
     }
-    setToggleButtonLabel(startLabel);
+    setToggleButtonLabel(START_LABEL);
   }, [running]);
 
-  const toggleRunningTimer = (event) => {
+  const handleResetButtonClick = (event) => {
     event.preventDefault();
+    resetTimer();
+  };
+
+  const handleToggleButtonClick = (event) => {
+    event.preventDefault();
+    toggleTimer();
+  };
+
+  const resetTimer = () => {
+    if (running) setRunning(false);
+    clearInterval(intervalId);
+    intervalId = undefined;
+    setSeconds(initialSeconds ?? 180);
+    setPhase(TIMER_PHASES.PREPARE);
+  };
+
+  const toggleTimer = () => {
     if (!running) {
       setRunning(true);
+      setPhase(TIMER_PHASES.WORK);
       intervalId = setInterval(() => {
         setSeconds((seconds) => seconds - 1);
       }, 1000);
@@ -29,14 +55,6 @@ const Timer = ({ initialSeconds }) => {
     }
     clearInterval(intervalId);
     setRunning(false);
-  };
-
-  const resetTimer = (event) => {
-    event.preventDefault();
-    if (running) setRunning(false);
-    clearInterval(intervalId);
-    intervalId = undefined;
-    setSeconds(initialSeconds ?? 180);
   };
 
   return (
@@ -49,19 +67,20 @@ const Timer = ({ initialSeconds }) => {
         alignItems: "center",
       }}
     >
-      <div>{seconds}</div>
+      <div>{phase}</div>
+      <div data-testid="countdown">{seconds}</div>
       <div style={{ display: "flex", gap: "1rem" }}>
         <button
           data-testid="toggle-button"
           style={{ maxWidth: "4rem" }}
-          onClick={toggleRunningTimer}
+          onClick={handleToggleButtonClick}
         >
           {toggleButtonLabel}
         </button>
         <button
           data-testid="reset-button"
           style={{ maxWidth: "4rem" }}
-          onClick={resetTimer}
+          onClick={handleResetButtonClick}
           disabled={running === false && seconds === initialSeconds}
         >
           Reset

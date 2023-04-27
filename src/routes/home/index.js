@@ -10,7 +10,7 @@ const Home = () => (
     <ul>
       <li>3-minute timer for work.</li>
       <li>1-minute timer for rest.</li>
-      <li>10-second timer for combo.</li>
+      <li>5-second timer for combo.</li>
       <li>Random 1-digit number generator for combo.</li>
     </ul>
     <Round />
