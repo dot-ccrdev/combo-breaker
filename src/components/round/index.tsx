@@ -1,4 +1,3 @@
-import { h } from "preact";
 import Timer from "../timer";
 
 const Round = () => {
