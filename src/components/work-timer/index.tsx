@@ -11,7 +11,7 @@ const PHASES = {
   THROW: "Throw",
   WORK: "Work",
 };
-let intervalId;
+let intervalId: IntervalId;
 
 const WorkTimer = () => {
   const [phase, setPhase] = useState(PHASES.PREPARE);
@@ -32,12 +32,12 @@ const WorkTimer = () => {
     setToggleButtonLabel(START_LABEL);
   }, [running]);
 
-  const handleResetButtonClick = (event) => {
+  const handleResetButtonClick = (event: MouseEvent) => {
     event.preventDefault();
     resetTimer();
   };
 
-  const handleToggleButtonClick = (event) => {
+  const handleToggleButtonClick = (event: MouseEvent) => {
     event.preventDefault();
     toggleTimer();
   };
@@ -95,5 +95,7 @@ const WorkTimer = () => {
     </div>
   );
 };
+
+type IntervalId = string | number | NodeJS.Timeout | undefined;
 
 export default WorkTimer;

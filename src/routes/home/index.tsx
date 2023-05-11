@@ -1,8 +1,8 @@
-import { h } from "preact";
-import style from "./style.css";
+import style from "./style.module.css";
 import Round from "../../components/round";
+import { FunctionalComponent } from "preact";
 
-const Home = () => (
+const Home: FunctionalComponent<HomeProps> = () => (
   <div class={style.home}>
     <h1>Home</h1>
     <h2>App features</h2>
@@ -16,5 +16,9 @@ const Home = () => (
     <Round />
   </div>
 );
+
+interface HomeProps {
+  path?: string;
+}
 
 export default Home;
