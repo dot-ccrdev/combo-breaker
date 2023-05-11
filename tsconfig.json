@@ -3,7 +3,8 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "outDir": "./dist",
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "strict": true
   },
   "include": ["./src/**/*"]
 }
