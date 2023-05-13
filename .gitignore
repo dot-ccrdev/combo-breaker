@@ -1,8 +1,0 @@
-node_modules
-/build
-/dist
-/*.log
-.env
-.env.build
-
-.vercel
