@@ -1,9 +1,24 @@
-const appName = "Combo Breaker";
+const content = {
+  headerAppName: "Combo Breaker",
+  helperTextPause: "Tap screen to pause",
+};
 
-function writeH1() {
-  const h1 = document.querySelector("h1");
+const cssClasses = {
+  headerContent: ".header__content",
+  helperTextContent: ".helper-text__content",
+};
+
+function writeHeaderContent() {
+  const h1 = document.querySelector(cssClasses.headerContent);
   if (!h1) return;
-  h1.textContent = appName;
+  h1.textContent = content.headerAppName;
 }
 
-writeH1();
+function writeHelperTextContent() {
+  const helperText = document.querySelector(cssClasses.helperTextContent);
+  if (!helperText) return;
+  helperText.textContent = content.helperTextPause;
+}
+
+writeHeaderContent();
+writeHelperTextContent();
