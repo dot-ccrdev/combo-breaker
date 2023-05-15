@@ -1,23 +1,41 @@
 "use strict";
 const content = {
-    headerAppName: "Combo Breaker",
-    helperTextPause: "Tap screen to pause",
+    clock: "2:54",
+    combo: "1-1-2",
+    header: "Combo Breaker",
+    pauseButton: "PAUSE",
 };
 const cssClasses = {
+    clockContent: ".clock__content",
+    comboContent: ".combo__content",
     headerContent: ".header__content",
-    helperTextContent: ".helper-text__content",
+    pauseButtonContent: ".pause__button__content",
 };
-function writeHeaderContent() {
-    const h1 = document.querySelector(cssClasses.headerContent);
-    if (!h1)
+function writeClockContent() {
+    const clockContent = document.querySelector(cssClasses.clockContent);
+    if (!clockContent)
         return;
-    h1.textContent = content.headerAppName;
+    clockContent.textContent = content.clock;
 }
-function writeHelperTextContent() {
-    const helperText = document.querySelector(cssClasses.helperTextContent);
-    if (!helperText)
+function writeComboContent() {
+    const comboContent = document.querySelector(cssClasses.comboContent);
+    if (!comboContent)
         return;
-    helperText.textContent = content.helperTextPause;
+    comboContent.textContent = content.combo;
+}
+function writeHeaderContent() {
+    const headerContent = document.querySelector(cssClasses.headerContent);
+    if (!headerContent)
+        return;
+    headerContent.textContent = content.header;
+}
+function writePauseButtonContent() {
+    const pauseButtonContent = document.querySelector(cssClasses.pauseButtonContent);
+    if (!pauseButtonContent)
+        return;
+    pauseButtonContent.textContent = content.pauseButton;
 }
 writeHeaderContent();
-writeHelperTextContent();
+writePauseButtonContent();
+writeClockContent();
+writeComboContent();
